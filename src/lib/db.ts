@@ -8,40 +8,10 @@ import { Pool } from 'pg'
  * cloud database services. Use this pool for database operations
  * throughout the application.
  */
-if (!process.env.DB_HOST) {
-  throw new Error('Database connection string not found in environment variables')
-}
-
 const pool = new Pool({
   connectionString: process.env.DB_HOST,
   ssl: {
     rejectUnauthorized: false
-  },
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
-})
-
-// Test the connection
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err)
-  process.exit(-1)
-})
-
-// Verify connection
-pool.connect((err, client, done) => {
-  if (err) {
-    console.error('Error connecting to the database', err)
-  }
-  if (client) {
-    client.query('SELECT NOW()', (err, result) => {
-      done()
-      if (err) {
-        console.error('Error executing test query', err)
-      } else {
-        console.log('Database connection successful')
-      }
-    })
   }
 })
 

@@ -12,16 +12,7 @@ import { ProductService } from '@/services/productService'
  */
 export async function GET(): Promise<NextResponse<ResponseData<Product[]>>> {
   try {
-    // Validate database connection
-    if (!process.env.DB_HOST) {
-      throw new Error('Database connection string not found')
-    }
-
     const products = await ProductService.getAllProducts()
-
-    if (!products) {
-      throw new Error('Failed to fetch products')
-    }
 
     return NextResponse.json({
       message: 'Products retrieved successfully',
@@ -29,12 +20,9 @@ export async function GET(): Promise<NextResponse<ResponseData<Product[]>>> {
     })
   } catch (error) {
     console.error('Error fetching products:', error)
-    
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-    
     return NextResponse.json(
       {
-        message: `Error retrieving products: ${errorMessage}`,
+        message: 'Error retrieving products',
         data: [],
       },
       { status: 500 }
