@@ -6,17 +6,22 @@ import { PlaceOrderRequest } from "@/types/placeOrderRequest"
 import { Product } from "@/types/product"
 import { useCallback, useEffect } from "react"
 
+/**
+ * Custom hook for managing product table functionality
+ * Handles product fetching, selection, and orders
+ * @returns {Object} Functions and state for product table interactions
+ */
 const useProductTable = () => {
   const { listProducts, selectedItems, setListProducts, setSelectedItems } =
     productStore()
 
   const { setListPackages } = orderStore()
 
-  const fetchProducts = async () => {
+  const fetchProducts = useCallback(async () => {
     const res = await fetch("/api/products")
     const responseData = (await res.json()) as ResponseData<Product[]>
     setListProducts(responseData.data)
-  }
+  }, [setListProducts])
 
   const handleCheckboxChange = (id: number) => {
     if (selectedItems.includes(id)) {
@@ -28,7 +33,7 @@ const useProductTable = () => {
 
   useEffect(() => {
     fetchProducts()
-  }, [])
+  }, [fetchProducts])
 
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,7 +53,7 @@ const useProductTable = () => {
     if (responseData.data) {
       setListPackages(responseData.data)
     }
-  }, [selectedItems])
+  }, [selectedItems, setListPackages])
 
   return {
     listProducts,

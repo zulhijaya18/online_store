@@ -1,3 +1,8 @@
+/**
+ * Calculates the courier charge based on the package weight.
+ * @param weight - The weight of the package in grams.
+ * @returns The courier charge in numbers.
+ */
 export const courierCharge = (weight: number): number => {
     switch(true) {
         case weight <= 200:

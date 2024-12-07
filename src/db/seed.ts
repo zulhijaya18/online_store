@@ -11,6 +11,18 @@ dotenv.config()
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
+/**
+ * Seeds the database with initial data from a SQL file.
+ * 
+ * This function performs the following steps:
+ * 1. Connects to the PostgreSQL database using the connection string from environment variables.
+ * 2. Reads the seed.sql file from the same directory.
+ * 3. Splits the SQL file into individual statements.
+ * 4. Executes each statement sequentially.
+ * 5. Logs the execution of each statement and overall success or failure.
+ * 
+ * @throws {Error} If there's an issue connecting to the database or executing SQL statements.
+ */
 async function seed() {
   const pool = new Pool({
     connectionString: process.env.DB_HOST,

@@ -3,6 +3,13 @@ import { ResponseData } from '@/types/api'
 import { Product } from '@/types/product'
 import { ProductService } from '@/services/productService'
 
+/**
+ * API endpoint to fetch all products
+ * 
+ * @route GET /api/products
+ * @returns {NextResponse<ResponseData<Product[]>>} JSON response with products data
+ * @throws {NextResponse} 500 if there's an error fetching products
+ */
 export async function GET(): Promise<NextResponse<ResponseData<Product[]>>> {
   try {
     const products = await ProductService.getAllProducts()
