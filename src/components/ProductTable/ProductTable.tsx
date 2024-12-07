@@ -5,34 +5,38 @@ import styles from "./ProductTable.module.css"
 import useProductTable from "./hooks/useProductTable"
 
 export const ProductTable = () => {
-  const { listProducts, selectedItems, handleCheckboxChange, handleSubmit, fetchProducts } = useProductTable()
+  const { listProducts, selectedItems, handleCheckboxChange, handleSubmit } = useProductTable()
 
   const renderProducts = useMemo(() => {
-    return listProducts.map((product) => (
-      <tr key={product.id}>
-        <td>
-          <input
-            type="checkbox"
-            checked={selectedItems.includes(product.id)}
-            onChange={() => handleCheckboxChange(product.id)}
-          />
-        </td>
-        <td>{product.name}</td>
-        <td>${product.price}</td>
-        <td>{product.weight}g</td>
-      </tr>
-    ))
-  }, [listProducts, selectedItems, handleCheckboxChange, fetchProducts])
+    return listProducts.map((product) => {
+      const { id, name, price, weight } = product
+      return (
+        <tr key={id}>
+          <td className={styles.td}>{name}</td>
+          <td className={styles.td}>${price}</td>
+          <td className={styles.td}>{weight}g</td>
+          <td className={styles.td}>
+            <input
+              type="checkbox"
+              checked={selectedItems.includes(id)}
+              onChange={() => handleCheckboxChange(id)}
+              className={styles.checkbox}
+            />
+          </td>
+        </tr>
+      )
+    })
+  }, [listProducts, selectedItems, handleCheckboxChange])
 
   return (
     <div className={styles.productTable}>
       <table className={styles.table}>
         <thead className={styles.thead}>
           <tr>
-            <th className={styles.th}></th>
             <th className={styles.th}>Name</th>
             <th className={styles.th}>Price</th>
             <th className={styles.th}>Weight</th>
+            <th className={styles.th}></th>
           </tr>
         </thead>
         <tbody className={styles.tbody}>
