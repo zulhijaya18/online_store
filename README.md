@@ -1,36 +1,100 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+A Next.js application for an calculating optimized shipping packages for delivery.
 
-## Getting Started
+## Features
+- Product listing with details (name, weight, price)
+- Multiple item selection for orders
+- Automatic package optimization based on:
+  - Weight distribution
+  - Price limits
+  - Package count optimization
+- Dynamic courier pricing based on package weight
+- Real-time order summary with package details
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Frontend**:
+  - Next.js 13+ (App Router)
+  - TypeScript
+  - Tailwind CSS
+  - Zustand (State Management)
+
+- **Backend**:
+  - Next.js API Routes
+  - PostgreSQL Database (CockroachDB as DB provider)
+
+## Project Structure
+
+```
+src/
+├── app/
+│   └── api/            # API routes
+│       ├── products/   # Product listing endpoint
+│       └── place-order/# Order processing endpoint
+├── components/         # React components
+│   ├── Home/
+│   ├── ProductTable/   # Product listing and selection
+│   └── OrderSummary/   # Package details display
+├── constants/         # Application constants
+├── lib/              # Database and utility functions
+├── services/         # Business logic layer
+├── stores/           # Zustand state management
+└── types/            # TypeScript type definitions
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting Started
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install or yarn
+   ```
+3. Set up your environment variables in `.env`:
+   ```
+   DB_HOST=your_postgresql_connection_string
+   ```
+4. Run database seed:
+   ```bash
+   npm run seed or yarn seed
+   ```
+5. Run the development server:
+   ```bash
+   npm run dev or yarn dev
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## API Endpoints
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### GET /api/products
+Returns list of available products
 
-## Learn More
+### POST /api/place-order
+Creates optimized packages based on selected items
 
-To learn more about Next.js, take a look at the following resources:
+Request body:
+```json
+{
+  "items": number[] // Array of product IDs
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Response:
+```json
+{
+  "message": string,
+  "data": [
+    {
+      "totalWeight": number,
+      "totalPrice": number,
+      "courierPrice": number,
+      "items": Product[]
+    }
+  ]
+}
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Business Rules
+- Maximum package price: 250
+- Courier charges based on weight:
+  - ≤ 200g: $5
+  - ≤ 500g: $10
+  - ≤ 1000g: $15
+  - ≤ 5000g: $20
+  - > 5000g: $0 (not supported)
