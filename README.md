@@ -45,7 +45,10 @@ src/
 1. Clone the repository
 2. Install dependencies:
    ```bash
-   npm install or yarn
+   npm install
+   ```
+   ```
+   yarn install
    ```
 3. Set up your environment variables in `.env`:
    ```
@@ -53,11 +56,17 @@ src/
    ```
 4. Run database seed:
    ```bash
-   npm run seed or yarn seed
+   npm run seed
+   ```
+   ```
+   yarn seed
    ```
 5. Run the development server:
    ```bash
-   npm run dev or yarn dev
+   npm run dev
+   ```
+   ```
+   yarn dev
    ```
 
 ## API Endpoints
@@ -97,4 +106,3 @@ Response:
   - ≤ 500g: $10
   - ≤ 1000g: $15
   - ≤ 5000g: $20
-  - > 5000g: $0 (not supported)
