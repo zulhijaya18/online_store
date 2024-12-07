@@ -5,7 +5,7 @@ import styles from "./ProductTable.module.css"
 import useProductTable from "./hooks/useProductTable"
 
 export const ProductTable = () => {
-  const { listProducts, selectedItems, handleCheckboxChange, handleSubmit } = useProductTable()
+  const { listProducts, selectedItems, handleCheckboxChange, handleSubmit, fetchProducts } = useProductTable()
 
   const renderProducts = useMemo(() => {
     return listProducts.map((product) => (
@@ -22,7 +22,7 @@ export const ProductTable = () => {
         <td>{product.weight}g</td>
       </tr>
     ))
-  }, [listProducts, selectedItems, handleCheckboxChange])
+  }, [listProducts, selectedItems, handleCheckboxChange, fetchProducts])
 
   return (
     <div className={styles.productTable}>

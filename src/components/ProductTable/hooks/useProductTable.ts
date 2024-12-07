@@ -58,6 +58,7 @@ const useProductTable = () => {
   return {
     listProducts,
     handleCheckboxChange,
+    fetchProducts,
     selectedItems,
     handleSubmit
   }

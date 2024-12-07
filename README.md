@@ -13,7 +13,7 @@ A Next.js application for an calculating optimized shipping packages for deliver
 ## Tech Stack
 
 - **Frontend**:
-  - Next.js 13+ (App Router)
+  - Next.js
   - TypeScript
   - Tailwind CSS
   - Zustand (State Management)

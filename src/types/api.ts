@@ -1,4 +1,4 @@
 export interface ResponseData<T> {
-    message: string;
-    data: T;
+    message: string
+    data: T
 }
