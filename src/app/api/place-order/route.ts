@@ -58,10 +58,13 @@ export async function POST(
         }
         
         if (!addedToExistingPackage) {
-            const packageItem = packages[0]
-            packageItem.items.push(currentItem)
-            packageItem.totalWeight += Number(currentItem.weight)
-            packageItem.totalPrice += Number(currentItem.price)            
+            const newPackageItem = {
+                totalWeight: Number(currentItem.weight),
+                totalPrice: Number(currentItem.price),
+                courierPrice: 0,
+                items: [currentItem]
+            }
+            packages.push(newPackageItem)
         }
     }
 
