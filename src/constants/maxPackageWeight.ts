@@ -1,0 +1,1 @@
+export const MAX_PACKAGE_WEIGHT = 250

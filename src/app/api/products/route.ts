@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server'
 import { ResponseData } from '@/types/api'
-import pool from '@/lib/db'
 import { Product } from '@/types/product'
+import { ProductService } from '@/services/productService'
 
 export async function GET(): Promise<NextResponse<ResponseData<Product[]>>> {
   try {
-    const result = await pool.query('SELECT * FROM products')
-    const products: Product[] = result.rows
+    const products = await ProductService.getAllProducts()
 
     return NextResponse.json({
       message: 'Products retrieved successfully',
