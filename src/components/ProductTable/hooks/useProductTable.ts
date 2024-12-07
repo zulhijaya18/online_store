@@ -1,7 +1,8 @@
 import { productStore } from "@/stores/productStore"
 import { ResponseData } from "@/types/api"
+import { PlaceOrderRequest } from "@/types/placeOrderRequest"
 import { Product } from "@/types/product"
-import { useEffect } from "react"
+import { FormEventHandler, useEffect } from "react"
 
 const useProductTable = () => {
   const { listProducts, selectedItems, setListProducts, setSelectedItems } =
@@ -25,13 +26,18 @@ const useProductTable = () => {
     fetchProducts()
   }, [])
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const body = {
+      items: selectedItems
+    } as PlaceOrderRequest
+
     await fetch("/api/place-order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ selectedItems }),
+      body: JSON.stringify(body),
     })
   }
 
