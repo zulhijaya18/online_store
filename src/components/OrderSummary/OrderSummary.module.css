@@ -1,3 +1,11 @@
 .orderSummary {
-    @apply mt-10;
+    @apply my-10;
+
+    .packageItem {
+        @apply my-4;
+    }
+
+    .packageDetails {
+        @apply grid grid-cols-2 w-80;
+    }
 }

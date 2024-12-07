@@ -1,6 +1,6 @@
 "use client"
 
-import { MouseEventHandler, useMemo } from "react"
+import { useMemo } from "react"
 import styles from "./ProductTable.module.css"
 import useProductTable from "./hooks/useProductTable"
 

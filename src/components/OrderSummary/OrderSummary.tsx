@@ -1,21 +1,42 @@
+"use client"
+
+import { useMemo } from "react"
+import { useOrderSummary } from "./hooks/useOrderSummary"
 import styles from "./OrderSummary.module.css"
+import { Package } from "@/types/package"
 
 export const OrderSummary = () => {
+    const { listPackages } = useOrderSummary()
+
+    const renderPackages = useMemo(() => {
+        return listPackages.map((packageItem: Package, index: number) => {
+            const { items, totalPrice, totalWeight, courierPrice } = packageItem
+            return (
+                <div key={index}>
+                    <p className={styles.packageItem}>Package {index + 1}</p>
+                    <span>Items - {items.map(item => item.name).join(", ")}</span>
+                    <div className={styles.packageDetails}>
+                        <span>Total weight</span>
+                        <span>- {totalWeight}g</span>
+                        <span>Total price</span>
+                        <span>- ${totalPrice}</span>
+                        <span>Courier price</span>
+                        <span>- ${courierPrice}</span>
+                    </div>
+                </div>
+            )
+        })
+    }, [listPackages])
+
     return (
         <div className={styles.orderSummary}>
-            <h5>This order has following packages:</h5>
-            <div>
-                <p className="my-4">Package 1</p>
-                <span>Items - Item 1, Item 2</span>
-                <div className="grid grid-cols-2 w-80">
-                    <span>Total weight</span>
-                    <span>- 300g</span>
-                    <span>Total price</span>
-                    <span>- $100</span>
-                    <span>Courier price</span>
-                    <span>- $10</span>
+            {listPackages.length > 0 && (
+            <>
+                <h5>This order has following packages:</h5>
+                <div>
+                    {renderPackages}
                 </div>
-            </div>
+            </>)}
         </div>
     )
 }

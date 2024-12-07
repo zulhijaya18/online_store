@@ -1,17 +1,10 @@
 import { NextResponse } from "next/server"
 import { ResponseData } from "@/types/api"
-import { Product } from "@/types/product"
 import { PlaceOrderRequest } from "@/types/placeOrderRequest"
 import { ProductService } from "@/services/productService"
 import { MAX_PACKAGE_WEIGHT } from "@/constants/maxPackageWeight"
 import { courierCharge } from "./courierCharge"
-
-interface Package {
-    totalWeight: number
-    totalPrice: number
-    courierPrice: number
-    items: Product[]
-}
+import { Package } from "@/types/package"
 
 export async function POST(
   request: Request
